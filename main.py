@@ -18,28 +18,26 @@ if __name__ == '__main__':
     parser.add_argument('-u', '--upload')
     parser.add_argument('-e', '--extract')
     parser.add_argument('-c', '--compression')
-    
+    parser.add_argument('-f', '--filename')
+    parser.add_argument('-v', '--videotodl')
     args = parser.parse_args()
     print(args)
     print(args.upload)
     if args.upload != None:
         PremierChoix = 3
         ChoixCloud = 1
-        ChoixCompr = args.UploadOrExtract
+        ChoixCompr = args.compression
     if args.extract != None:
         PremierChoix = 3
         ChoixCloud = 2
-        ChoixCompr = args.UploadOrExtract
+        
 
     channel_url = 'https://www.youtube.com/channel/UCyj7svz9hL15ciYwrV_wpLg'
     
     urls = get_channel_videos(channel_url)
-    ChoixCloud = int(input("Ajouter des fichiers (1), Extraire des fichiers(2), Afficher les fichiers (3) : "))
     if ChoixCloud == 1:
-        ChoixCompr = int(input(f"Niveau de sureté voulu ? : \n 1 : Faible (plus de risque de corruption mais plus rapide)\n2 : Fort (Meme vitesse mais plus gros fichier vidéo)\n"))
-
         if ChoixCompr == 1:
-            fichiervoulue = str(input("Nom du fichier à convertir en vidéo (ne pas oublier l'extension) : "))
+            fichiervoulue = args.filename
             FileToImages(fichiervoulue)
             
             video_name = fichiervoulue + '.mp4'
@@ -47,7 +45,7 @@ if __name__ == '__main__':
             upload(video_name,video_name[:-4],'Compr1','22','','public')
             
         if ChoixCompr == 2:
-            fichiervoulue = str(input("Nom du fichier a convertire en vidéo (sans oublier l'extension) : \n"))
+            fichiervoulue = args.filename
             FileToImagesBig(fichiervoulue)
 
             video_name = fichiervoulue + '.mp4'
@@ -61,7 +59,7 @@ if __name__ == '__main__':
     if ChoixCloud == 2:
         for i in range(len(urls)):
             print(i+1,urls[str(i+1)][1]+'\n')
-        ChoixVid = input("Selectionner le numéro associé au fichier a extraire : ")
+        ChoixVid = args.videotodl
         urlDL = urls[ChoixVid][0]
         print(urlDL)
         DLFromYt(urlDL)
