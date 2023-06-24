@@ -8,45 +8,18 @@ from VideoToFileBig import VideoToFileBig
 from GetYtVideosName import get_channel_videos
 from UploadeToYt import upload
 from VideoDownloader import DLFromYt
+import argparse
 import os
 
 if __name__ == '__main__':
-    PremierChoix = int(input("Vidéo -> Fichier (1)\nFichier -> Vidéo (2)\nYoutubeAsAcloud (beta)(3): "))
-    if PremierChoix == 1:
-        url = str(input('Saisir url a convertire en fichier : ' ))
-        DLFromYt(url)
-
-        TypeVideo = int(input("Saisire le type de vidéo : (1) : Normale (2) : Insecure : "))
-        if TypeVideo == 1:
-            nomfichier = str('./videos/'+ input("Saisir le nom de la vidéo télécharger (sans l'extension) : ")+'.mp4')
-            print(nomfichier)
-            final = str(input("Saisir le nom du fichier a recréer a partire de la vidéo (ne pas oublier l'extension) : "))
-            VideoToFileNormal(nomfichier,final)
-
-        if TypeVideo == 2:
-            nomfichier = str('./videos/'+ input("Saisir le nom de la vidéo télécharger (sans l'extension): ")+'.mp4')
-            print(nomfichier)
-            final = str(input("Saisir le nom du fichier a recréer a partire de la vidéo (ne pas oublier l'extension .zip (ou autres)) : "))
-            VideoToFileBig(nomfichier,final)
+    parser = argparse.ArgumentParser(description='Yep')
+    parser.add_argument('UploadOrExtract', metavar='UE', type=str, nargs='+',
+                    help='Wich function to use')
+    parser.add_argument('-u', '--uplaod')
+    parser.add_argument('-e', '--extract')
+    args = parser.parse_args()
+    if args.UploadOrExtract == 'u':
         
-    if PremierChoix == 2:
-        ChoixCompr = int(input(f"Niveau de sureté voulu ? : \n 1 : Faible (plus de risque de corruption mais plus rapide)\n2 : Fort (Meme vitesse mais plus gros fichier vidéo)\n"))
-    
-        if ChoixCompr == 1:
-            fichiervoulue = str(input("Nom du fichier à convertir en vidéo (ne pas oublier l'extension) : "))
-            FileToImages(fichiervoulue)
-            
-            video_name = fichiervoulue + '.mp4'
-            ImagesToVideo(video_name)
-
-            #import UploadeToYt
-        if ChoixCompr == 2:
-            fichiervoulue = str(input("Nom du fichier a convertire en vidéo (sans oublier l'extension) : \n"))
-            FileToImagesBig(fichiervoulue)
-
-            video_name = fichiervoulue + '.mp4'
-            ImagesBigToVideo(video_name)
-
     if PremierChoix == 3:
         channel_url = input('Enter a YouTube channel URL: ')
         
